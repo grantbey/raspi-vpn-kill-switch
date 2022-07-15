@@ -72,7 +72,7 @@ iptables -A INPUT -i tun0 -j ACCEPT
 
 
 # this is the path of your VPN configuration
-openvpn --verb 0 --daemon --config /usr/src/AirVPN_Netherlands_UDP-2018.ovpn &
+openvpn --verb 0 --daemon --config /usr/src/openvpn/AirVPN_Netherlands_UDP-2018.ovpn &
 
 echo "Waiting for VPN to initialize"
 sleep 10
@@ -87,4 +87,4 @@ echo "Current IP: `curl -s ifconfig.co`"
 # sysctl -w net.ipv4.ip_forward=1
 
 echo "Updating myanonymouse dynamic seedbox IP"
-/usr/src/myanonymouse.sh
+/usr/src/myanonymouse/myanonymouse.sh
