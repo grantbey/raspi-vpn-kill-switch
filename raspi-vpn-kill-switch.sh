@@ -54,24 +54,24 @@ iptables -A INPUT -i lo -j ACCEPT
 iptables -A OUTPUT -o tun0 -p icmp -j ACCEPT
 
 echo "Allowing traffic on the local network"
+# Set your local network IP range here to allow local connections
 iptables -A OUTPUT -d 192.168.1.0/24 -j ACCEPT
 iptables -A INPUT -s 192.168.1.0/24 -j ACCEPT
 
-echo "Allowing AirVPN DNS traffic"
+echo "Allowing VPN DNS traffic"
+# This is the DNS server of my VPN provider
 iptables -A OUTPUT -d 10.4.0.1 -j ACCEPT
 
 echo "Allowing openvpn traffic"
+# I found this group method didn't work
 # iptables -A OUTPUT -j ACCEPT -m owner --gid-owner openvpn
+# Alternately, I simply allowed traffic destined for my VPN server on the specified port
+# This information should come from your VPN provider
 iptables -A OUTPUT -p udp -m udp -d 134.19.179.186 --dport 2018 -j ACCEPT
-iptables -A OUTPUT -o tun0 -j ACCEPT
-
-
-echo "Allowing traffic on tun"
 iptables -A OUTPUT -o tun0 -j ACCEPT
 iptables -A INPUT -i tun0 -j ACCEPT
 
-
-# this is the path of your VPN configuration
+echo "Starting openvpn"
 openvpn --verb 0 --daemon --config /usr/src/openvpn/AirVPN_Netherlands_UDP-2018.ovpn &
 
 echo "Waiting for VPN to initialize"
@@ -79,12 +79,5 @@ sleep 10
 
 echo "Current IP: `curl -s ifconfig.co`"
 
-# block dns because it's a third party system app that tries to do it (and not openvpn)
-# echo "Blocking DNS for resolving openvpn server"
-# iptables -D OUTPUT -p udp --dport 53 -j ACCEPT
-
-# echo "Turning on IP forwarding"
-# sysctl -w net.ipv4.ip_forward=1
-
 echo "Updating myanonymouse dynamic seedbox IP"
-/usr/src/myanonymouse/myanonymouse.sh
+/usr/src/dynamic-ip/update-ip.sh
