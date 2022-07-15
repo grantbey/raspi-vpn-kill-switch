@@ -1,7 +1,5 @@
-How to Setup Your Raspberry PI As A VPN Router With A Kill Switch
+How to Setup Your Raspberry PI With A VPN Kill Switch
 
-This is all the source code you need to get your raspi into a vpn router with a kill switch.
+This work is based on the original work here: https://unbiased-coder.com/setup-raspi-vpn-router-kill-switch
 
-You can find a full step by step guide on how to do this here:
-
-https://unbiased-coder.com/setup-raspi-vpn-router-kill-switch
+I modified the script for my own purposes, since I did not intend to use the Pi as a router, but simply wanted to ensure that all traffic on the Pi was routed through the VPN at all times.
