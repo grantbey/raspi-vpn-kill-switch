@@ -79,5 +79,5 @@ sleep 10
 
 echo "Current IP: `curl -s ifconfig.co`"
 
-echo "Updating myanonymouse dynamic seedbox IP"
+echo "Updating dynamic seedbox"
 /usr/src/dynamic-ip/update-ip.sh
